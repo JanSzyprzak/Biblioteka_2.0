@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista książek i dodawanie nowych tytułów</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="main">
+    <div>
+        <h2>Biblioteka</h2>
+        <table>
+            <thead>  
+            <th>Tytuł</th>
+            <th>Autor</th>
+            <th>Opis</th>
+            <th>Liczba stron</th>
+            <th>Czy przeczytane?</th>
+            <th>Wypożyczone?</th>
+            </thead>
+        {% for book in books %}
+            <tr>
+                <td><a href="/books/{{ loop.index }}">{{ book.title }}</a></td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.description }}</td>
+                <td>{{ book.number_of_pages }}</td>
+                <td>{{ book.read }}</td>
+                <td>{{ book.borrowed }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <div>
+        <h2> Dodaj nowy tytuł: </h2>
+        <form method="POST" action="/">
+            {{ form.hidden_tag() }}
+            <table>
+                {% for field in form if field.widget.input_type != 'hidden' %}
+                    <tr>
+                        <th>{{ field.label }} {% if field.flags.required %}*{% endif %}</th>
+                        <td>{{ field }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <input type="submit" value="Go">
+        </form>
+    </div>
+</body>
+</html>
