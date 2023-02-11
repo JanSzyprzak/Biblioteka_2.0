@@ -9,9 +9,9 @@
         <div>
             <h2>Autorzy</h2>
             <table>        
-                {% for author in authors_list %}
+                {% for author in authors%}
                     <tr>          
-                        <td>{{ author }}</td>
+                        <td>{{ author.name }}</td>
                     </tr>
                 {% endfor %}
             </table>

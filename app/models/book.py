@@ -4,7 +4,6 @@ from app.models.tables import book_author
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), index=True)
-    author = db.Column(db.String(100), index=True)
     description = db.Column(db.String(250), index=True)
     number_of_pages = db.Column(db.Integer, index=True) 
     read = db.Column(db.Boolean)
