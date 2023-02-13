@@ -8,12 +8,23 @@ from app.main.forms import BookForm
 from app.extensions import db
 
 
+
+
 @bp.route('<int:book_id>/', methods=["GET", "POST"])
 def book_details(book_id):
-    authors = Author.query.all()
+    #authors = Author.query.all()
 
     book_to_update = Book.query.get(book_id)
+    
+    
     form = BookForm()
+    form.title.data = book_to_update.title
+    form.author.data = [author.name for author in book_to_update.authors] 
+    form.description.data = book_to_update.description
+    form.number_of_pages.data = book_to_update.number_of_pages
+    form.read.data = book_to_update.read
+    form.borrowed.data = book_to_update.borrowed
+
     if request.method == 'POST':
         title=request.form['title']     
         author=request.form['author'] 
@@ -27,12 +38,9 @@ def book_details(book_id):
         book_to_update.number_of_pages = number_of_pages
         book_to_update.read = read
         book_to_update.borrowed = borrowed
-
-        for author in authors:
-            if author.name == request.form['author']:
-                author_object = author    
-            else:
-                author_object = Author(name=request.form['author']) 
+                
+        author_object = Author(name=request.form['author']) 
+     
         
         db.session.add(book_to_update)
         book_to_update.authors.append(author_object)
