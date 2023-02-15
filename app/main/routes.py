@@ -21,6 +21,7 @@ def index():
             borrowed=form.borrowed.data
             )
         
+
         for author in authors:
             if author.name == request.form['author']:
                 author_object = author    

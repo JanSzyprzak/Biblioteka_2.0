@@ -39,10 +39,12 @@ def book_details(book_id):
         book_to_update.read = read
         book_to_update.borrowed = borrowed
                 
-        author_object = Author(name=request.form['author']) 
+        author_object = Author(name=author) 
      
         
         db.session.add(book_to_update)
+        for author in book_to_update.authors:
+            book_to_update.authors.remove(author)
         book_to_update.authors.append(author_object)
         db.session.commit()
 
